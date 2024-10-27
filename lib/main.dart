@@ -8,6 +8,7 @@ import 'features/auth/login_page.dart';
 import 'home_page.dart';
 import './features/auth/repository/providers.dart';
 import './features/Pages/Channel_Info.dart';
+import './features/channel/SettingPage.dart';
 
 
 void main() async {
@@ -26,7 +27,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: userAsyncValue.when(
-        data: (user) => user != null ? ProfileScreen() : LoginPage(),
+        data: (user) => user != null ? ChannelSettingsPage() : LoginPage(),
         loading: () => Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(child: Text('Error: $err')),
       ),
