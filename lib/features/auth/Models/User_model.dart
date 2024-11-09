@@ -6,7 +6,7 @@ class User {
   final String email;
   final String profilePic;
   final List<String> subscription;
-  final String videos;
+  final List<String> videos; // Updated to List<String>
   final String userId;
   final String description;
   final String type;
@@ -18,7 +18,7 @@ class User {
     required this.email,
     required this.profilePic,
     required this.subscription,
-    required this.videos,
+    required this.videos, // Updated to List<String>
     required this.userId,
     required this.description,
     required this.type,
@@ -32,7 +32,7 @@ class User {
       'email': email,
       'profilePic': profilePic,
       'subscription': subscription,
-      'videos': videos,
+      'videos': videos, // Ensures videos is saved as a List<String>
       'userId': userId,
       'description': description,
       'type': type,
@@ -47,7 +47,8 @@ class User {
       email: map['email'],
       profilePic: map['profilePic'],
       subscription: List<String>.from(map['subscription']),
-      videos: map['videos'],
+      videos:
+          List<String>.from(map['videos']), // Converts videos to List<String>
       userId: map['userId'],
       description: map['description'],
       type: map['type'],

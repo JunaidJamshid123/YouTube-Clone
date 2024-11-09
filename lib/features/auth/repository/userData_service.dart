@@ -18,6 +18,19 @@ class UserDataService {
 
   UserDataService({required this.auth, required this.firestore});
 
+ // Check if the username is available
+  Future<bool> isUsernameAvailable(String username) async {
+    try {
+      final querySnapshot = await firestore.collection('users')
+          .where('username', isEqualTo: username)
+          .get();
+      return querySnapshot.docs.isEmpty;
+    } catch (e) {
+      print('Error checking username availability: $e');
+      return false;
+    }
+  }
+
   // Add user data to Firestore
   Future<void> addUserToFirestore(custom.User user) async {
     try {
@@ -27,6 +40,7 @@ class UserDataService {
       print('Error adding user data to Firestore: $e');
     }
   }
+  
 
   // Update user data in Firebase Firestore
   Future<void> updateUserInFirestore(custom.User user) async {
