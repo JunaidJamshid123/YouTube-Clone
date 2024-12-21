@@ -18,10 +18,11 @@ class UserDataService {
 
   UserDataService({required this.auth, required this.firestore});
 
- // Check if the username is available
+  // Check if the username is available
   Future<bool> isUsernameAvailable(String username) async {
     try {
-      final querySnapshot = await firestore.collection('users')
+      final querySnapshot = await firestore
+          .collection('users')
           .where('username', isEqualTo: username)
           .get();
       return querySnapshot.docs.isEmpty;
@@ -40,7 +41,6 @@ class UserDataService {
       print('Error adding user data to Firestore: $e');
     }
   }
-  
 
   // Update user data in Firebase Firestore
   Future<void> updateUserInFirestore(custom.User user) async {
@@ -61,6 +61,27 @@ class UserDataService {
       }
     } catch (e) {
       print('Error retrieving user data from Firestore: $e');
+    }
+    return null;
+  }
+
+  // Fetch the current user's data from Firebase Firestore
+  Future<custom.User?> fetchCurrentUserData() async {
+    try {
+      final userId = auth.currentUser?.uid;
+      if (userId == null) {
+        print('No authenticated user found');
+        return null;
+      }
+
+      final doc = await firestore.collection('users').doc(userId).get();
+      if (doc.exists) {
+        return custom.User.fromMap(doc.data()!);
+      } else {
+        print('User document does not exist');
+      }
+    } catch (e) {
+      print('Error fetching current user data: $e');
     }
     return null;
   }
